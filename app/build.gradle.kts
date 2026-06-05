@@ -1,5 +1,4 @@
-plugins {
-    alias(libs.plugins.android.application)
+build.gradle.kts    alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
 }
 
