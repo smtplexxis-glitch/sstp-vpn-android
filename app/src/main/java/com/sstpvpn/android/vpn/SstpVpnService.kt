@@ -56,7 +56,7 @@ class SstpVpnService : VpnService() {
       if (!readHttpResponse(inp).contains("200")) { updateStatus("Ошибка HTTP"); socket.close(); return@withContext }
       updateStatus("HTTP туннель, SSTP..."); sendSstpInit(out)
       if (readSstpResponse(inp) == null) { updateStatus("Ошибка SSTP handshake"); socket.close(); return@withContext }
-      updateStatus("SSTP, PPP...
+      updateStatus("SSTP, PPP...")
       if (!negotiatePpp(inp, out, server.username, server.password)) { updateStatus("Ошибка PPP"); socket.close(); return@withContext }
       val vpnBuilder = Builder().setSession(server.name).addAddress("192.168.100.2", 24).addDnsServer("8.8.8.8").addDnsServer("8.8.4.4").setMtu(1400)
       val sel = prefs.selectedApps
@@ -96,7 +96,6 @@ class SstpVpnService : VpnService() {
   override fun onDestroy(){stopVpn();serviceScope.cancel();super.onDestroy()}
   private fun updateStatus(s:String){Log.d(TAG,s);statusCallback?.invoke(s)}
   private fun generateUuid():String{val b=ByteArray(16).also{SecureRandom().nextBytes(it)};b[6]=((b[6].toInt()and 0x0F)or 0x40).toByte();b[8]=((b[8].toInt()and 0x3F)or 0x80).toByte();return b.joinToString(""){ "%02x".format(it)}.let{"${it.substring(0,8)}-${it.substring(8,12)}-${it.substring(12,16)}-${it.substring(16,20)}-${it.substring(20)}"}}
-  private fun ByteArray.toHex()=joinToString(""){ "%02x".format(it)}
   private fun createTrustAllSslContext():SSLContext{val ta=arrayOf<TrustManager>(object:X509TrustManager{override fun checkClientTrusted(c:Array<X509Certificate>,a:String){}; override fun checkServerTrusted(c:Array<X509Certificate>,a:String){}; override fun getAcceptedIssuers():Array<X509Certificate>=arrayOf()});return SSLContext.getInstance("TLS").apply{init(null,ta,SecureRandom())}}
   private fun createNotificationChannel(){if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.O){val ch=NotificationChannel(CHANNEL_ID,"SSTP VPN",NotificationManager.IMPORTANCE_LOW).apply{description="VPN статус"};getSystemService(NotificationManager::class.java).createNotificationChannel(ch)}}
   private fun buildNotification(text:String):Notification{val i=PendingIntent.getActivity(this,0,Intent(this,MainActivity::class.java),PendingIntent.FLAG_IMMUTABLE);return NotificationCompat.Builder(this,CHANNEL_ID).setContentTitle("SSTP VPN").setContentText(text).setSmallIcon(R.drawable.ic_vpn).setContentIntent(i).setOngoing(true).build()}
