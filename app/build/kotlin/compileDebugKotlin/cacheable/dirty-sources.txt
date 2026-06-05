@@ -1,9 +1,0 @@
-/home/runner/work/sstp-vpn-android/sstp-vpn-android/app/src/main/java/com/sstpvpn/android/ui/AddEditServerActivity.kt
-/home/runner/work/sstp-vpn-android/sstp-vpn-android/app/src/main/java/com/sstpvpn/android/model/AppDatabase.kt
-/home/runner/work/sstp-vpn-android/sstp-vpn-android/app/src/main/java/com/sstpvpn/android/utils/PrefsManager.kt
-/home/runner/work/sstp-vpn-android/sstp-vpn-android/app/src/main/java/com/sstpvpn/android/ui/MainActivity.kt
-/home/runner/work/sstp-vpn-android/sstp-vpn-android/app/src/main/java/com/sstpvpn/android/model/AppInfo.kt
-/home/runner/work/sstp-vpn-android/sstp-vpn-android/app/src/main/java/com/sstpvpn/android/ui/ServerListActivity.kt
-/home/runner/work/sstp-vpn-android/sstp-vpn-android/app/src/main/java/com/sstpvpn/android/vpn/SstpVpnService.kt
-/home/runner/work/sstp-vpn-android/sstp-vpn-android/app/src/main/java/com/sstpvpn/android/ui/AppSelectorActivity.kt
-/home/runner/work/sstp-vpn-android/sstp-vpn-android/app/src/main/java/com/sstpvpn/android/model/VpnServer.kt
