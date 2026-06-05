@@ -37,7 +37,7 @@ jobs:
         c = c.replace('Open SSTP Client', 'SSTP VPN')
         with open(path,'w') as f:
             f.write(c)
-        print('Patched!')
+        print('Patched OK')
         PYEOF
 
     - uses: actions/setup-java@v4
@@ -49,7 +49,9 @@ jobs:
 
     - name: Build APK
       working-directory: app_source
-      run: ./gradlew assembleDebug
+      run: |
+        chmod +x gradlew
+        ./gradlew assembleDebug
 
     - uses: actions/upload-artifact@v4
       with:
