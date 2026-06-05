@@ -124,16 +124,14 @@ class SstpVpnService : VpnService() {
 
     private fun sendHttpConnect(out: OutputStream, host: String) {
         val uuid = generateUuid()
-        val r = "SSTP_DUPLEX_POST /sra_{BA195980-CD49-458b-9E23-C84EE0ADCD75}/ HTTP/1.1
-" +
-                "SSTPCORRELATIONID: {" + uuid + "}
-" +
-                "Content-Length: 18446744073709551615
-" +
-                "Host: " + host + "
-
-"
-        out.write(r.toByteArray()); out.flush()
+        val sb = StringBuilder()
+        sb.append("SSTP_DUPLEX_POST /sra_{BA195980-CD49-458b-9E23-C84EE0ADCD75}/ HTTP/1.1\r\n")
+        sb.append("SSTPCORRELATIONID: {").append(uuid).append("}\r\n")
+        sb.append("Content-Length: 18446744073709551615\r\n")
+        sb.append("Host: ").append(host).append("\r\n")
+        sb.append("\r\n")
+        out.write(sb.toString().toByteArray())
+        out.flush()
     }
 
     private fun readHttpResponse(inp: InputStream): String {

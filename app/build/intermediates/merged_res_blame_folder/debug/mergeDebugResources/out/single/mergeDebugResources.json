@@ -1,0 +1,66 @@
+[
+    {
+        "merged": "com.sstpvpn.android.app-debug-34:/menu_main_menu.xml.flat",
+        "source": "com.sstpvpn.android.app-main-36:/menu/main_menu.xml"
+    },
+    {
+        "merged": "com.sstpvpn.android.app-debug-34:/drawable_ic_launcher_foreground.xml.flat",
+        "source": "com.sstpvpn.android.app-main-36:/drawable/ic_launcher_foreground.xml"
+    },
+    {
+        "merged": "com.sstpvpn.android.app-debug-34:/drawable_ic_vpn.xml.flat",
+        "source": "com.sstpvpn.android.app-main-36:/drawable/ic_vpn.xml"
+    },
+    {
+        "merged": "com.sstpvpn.android.app-debug-34:/layout_item_app.xml.flat",
+        "source": "com.sstpvpn.android.app-main-36:/layout/item_app.xml"
+    },
+    {
+        "merged": "com.sstpvpn.android.app-debug-34:/drawable_circle_red.xml.flat",
+        "source": "com.sstpvpn.android.app-main-36:/drawable/circle_red.xml"
+    },
+    {
+        "merged": "com.sstpvpn.android.app-debug-34:/menu_app_selector_menu.xml.flat",
+        "source": "com.sstpvpn.android.app-main-36:/menu/app_selector_menu.xml"
+    },
+    {
+        "merged": "com.sstpvpn.android.app-debug-34:/layout_item_server.xml.flat",
+        "source": "com.sstpvpn.android.app-main-36:/layout/item_server.xml"
+    },
+    {
+        "merged": "com.sstpvpn.android.app-debug-34:/layout_activity_add_edit_server.xml.flat",
+        "source": "com.sstpvpn.android.app-main-36:/layout/activity_add_edit_server.xml"
+    },
+    {
+        "merged": "com.sstpvpn.android.app-debug-34:/layout_activity_server_list.xml.flat",
+        "source": "com.sstpvpn.android.app-main-36:/layout/activity_server_list.xml"
+    },
+    {
+        "merged": "com.sstpvpn.android.app-debug-34:/mipmap-anydpi-v26_ic_launcher.xml.flat",
+        "source": "com.sstpvpn.android.app-main-36:/mipmap-anydpi-v26/ic_launcher.xml"
+    },
+    {
+        "merged": "com.sstpvpn.android.app-debug-34:/layout_activity_main.xml.flat",
+        "source": "com.sstpvpn.android.app-main-36:/layout/activity_main.xml"
+    },
+    {
+        "merged": "com.sstpvpn.android.app-debug-34:/layout_activity_app_selector.xml.flat",
+        "source": "com.sstpvpn.android.app-main-36:/layout/activity_app_selector.xml"
+    },
+    {
+        "merged": "com.sstpvpn.android.app-debug-34:/drawable_circle_green.xml.flat",
+        "source": "com.sstpvpn.android.app-main-36:/drawable/circle_green.xml"
+    },
+    {
+        "merged": "com.sstpvpn.android.app-debug-34:/mipmap-anydpi-v26_ic_launcher_round.xml.flat",
+        "source": "com.sstpvpn.android.app-main-36:/mipmap-anydpi-v26/ic_launcher_round.xml"
+    },
+    {
+        "merged": "com.sstpvpn.android.app-debug-34:/drawable_ic_launcher_background.xml.flat",
+        "source": "com.sstpvpn.android.app-main-36:/drawable/ic_launcher_background.xml"
+    },
+    {
+        "merged": "com.sstpvpn.android.app-debug-34:/drawable_ic_app_default.xml.flat",
+        "source": "com.sstpvpn.android.app-main-36:/drawable/ic_app_default.xml"
+    }
+]

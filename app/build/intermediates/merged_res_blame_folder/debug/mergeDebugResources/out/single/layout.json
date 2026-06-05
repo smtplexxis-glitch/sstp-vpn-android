@@ -1,0 +1,26 @@
+[
+    {
+        "merged": "com.sstpvpn.android.app-mergeDebugResources-33:/layout/item_app.xml",
+        "source": "com.sstpvpn.android.app-main-36:/layout/item_app.xml"
+    },
+    {
+        "merged": "com.sstpvpn.android.app-mergeDebugResources-33:/layout/activity_main.xml",
+        "source": "com.sstpvpn.android.app-main-36:/layout/activity_main.xml"
+    },
+    {
+        "merged": "com.sstpvpn.android.app-mergeDebugResources-33:/layout/activity_add_edit_server.xml",
+        "source": "com.sstpvpn.android.app-main-36:/layout/activity_add_edit_server.xml"
+    },
+    {
+        "merged": "com.sstpvpn.android.app-mergeDebugResources-33:/layout/activity_app_selector.xml",
+        "source": "com.sstpvpn.android.app-main-36:/layout/activity_app_selector.xml"
+    },
+    {
+        "merged": "com.sstpvpn.android.app-mergeDebugResources-33:/layout/item_server.xml",
+        "source": "com.sstpvpn.android.app-main-36:/layout/item_server.xml"
+    },
+    {
+        "merged": "com.sstpvpn.android.app-mergeDebugResources-33:/layout/activity_server_list.xml",
+        "source": "com.sstpvpn.android.app-main-36:/layout/activity_server_list.xml"
+    }
+]
