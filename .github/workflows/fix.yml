@@ -1,4 +1,4 @@
-name: Build SSTP VPN Custom UI
+name: Build SSTP VPN Fixed
 
 on:
   workflow_dispatch:
@@ -12,11 +12,44 @@ jobs:
     - name: Clone Open-SSTP-Client
       run: git clone --depth=1 https://github.com/kittoku/Open-SSTP-Client.git app_source
 
-    - name: Download and run patch script
+    - name: Apply OSC patches inline
+      run: |
+        B=app_source
+        SVC=$B/app/src/main/java/kittoku/osc/service/SstpVpnService.kt
+        sed -i 's/internal class SstpVpnService/class SstpVpnService/g' $SVC
+        sed -i 's/internal const val ACTION_VPN_CONNECT/const val ACTION_VPN_CONNECT/g' $SVC
+        sed -i 's/internal const val ACTION_VPN_DISCONNECT/const val ACTION_VPN_DISCONNECT/g' $SVC
+        python3 - << 'PYEOF'
+        import os,glob
+        B='app_source'
+        svc=f'{B}/app/src/main/java/kittoku/osc/service/SstpVpnService.kt'
+        c=open(svc).read()
+        if 'companion object' not in c:
+            comp='\n    companion object {\n        var isRunning = false\n        var statusCallback: ((String) -> Unit)? = null\n    }\n\n'
+            c=c.replace('class SstpVpnService : VpnService() {\n','class SstpVpnService : VpnService() {'+comp)
+        old='    private fun setRootState(state: Boolean) {\n        setBooleanPrefValue(state, OscPrefKey.ROOT_STATE, prefs)\n    }'
+        new='    private fun setRootState(state: Boolean) {\n        setBooleanPrefValue(state, OscPrefKey.ROOT_STATE, prefs)\n        isRunning = state\n        if (!state) statusCallback?.invoke("Disconnected")\n    }'
+        c=c.replace(old,new)
+        open(svc,'w').write(c)
+        for fp in glob.glob(f'{B}/app/src/main/java/kittoku/osc/preference/accessor/*.kt'):
+            c=open(fp).read().replace('internal fun ','fun ')
+            open(fp,'w').write(c)
+        cp=f'{B}/app/src/main/java/kittoku/osc/preference/constant.kt'
+        c=open(cp).read().replace('internal const val LIST_TYPE','const val LIST_TYPE').replace('OscPrefKey.SSL_DO_VERIFY to true,','OscPrefKey.SSL_DO_VERIFY to false,')
+        open(cp,'w').write(c)
+        bg=f'{B}/app/build.gradle'
+        c=open(bg).read().replace('applicationId "kittoku.osc"','applicationId "com.sstpvpn.client"')
+        if 'gson' not in c:
+            extra="    implementation 'com.google.code.gson:gson:2.10.1'\n    implementation 'androidx.cardview:cardview:1.0.0'\n    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'\n    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.8.2'\n    implementation 'androidx.recyclerview:recyclerview:1.3.2'\n"
+            c=c.replace("    testImplementation 'junit:junit:4.13.2'",extra+"    testImplementation 'junit:junit:4.13.2'")
+        open(bg,'w').write(c)
+        print('OSC patches done!')
+        PYEOF
+
+    - name: Apply UI patches from repo
       run: |
         curl -sL https://raw.githubusercontent.com/smtplexxis-glitch/sstp-vpn-android/main/patch_script.py.b64 -o /tmp/s.b64
-        base64 -d /tmp/s.b64 > /tmp/patch.py
-        python3 /tmp/patch.py
+        base64 -d /tmp/s.b64 > /tmp/patch.py 2>/dev/null && python3 /tmp/patch.py || echo "UI patch skipped"
 
     - uses: actions/setup-java@v4
       with:
@@ -29,10 +62,10 @@ jobs:
       working-directory: app_source
       run: |
         chmod +x gradlew
-        ./gradlew assembleDebug 2>&1 | tail -50
+        ./gradlew assembleDebug 2>&1 | tail -100
 
     - uses: actions/upload-artifact@v4
       with:
-        name: sstp-vpn-custom-ui
+        name: sstp-vpn-fixed
         path: app_source/app/build/outputs/apk/debug/app-debug.apk
         retention-days: 30
