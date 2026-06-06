@@ -1,4 +1,4 @@
-name: Build SSTP VPN
+name: Build SSTP VPN Custom UI
 
 on:
   workflow_dispatch:
@@ -12,33 +12,11 @@ jobs:
     - name: Clone Open-SSTP-Client
       run: git clone --depth=1 https://github.com/kittoku/Open-SSTP-Client.git app_source
 
-    - name: Patch defaults
+    - name: Download and run patch script
       run: |
-        python3 << 'PYEOF'
-        base = 'app_source'
-        path = base+'/app/src/main/java/kittoku/osc/preference/constant.kt'
-        with open(path) as f:
-            c = f.read()
-        c = c.replace('OscPrefKey.HOME_HOSTNAME to EMPTY_TEXT,', 'OscPrefKey.HOME_HOSTNAME to "64.188.69.242",')
-        c = c.replace('OscPrefKey.HOME_USERNAME to EMPTY_TEXT,', 'OscPrefKey.HOME_USERNAME to "tel",')
-        c = c.replace('OscPrefKey.HOME_PASSWORD to EMPTY_TEXT,', 'OscPrefKey.HOME_PASSWORD to "H78fgk159s",')
-        c = c.replace('OscPrefKey.SSL_DO_VERIFY to true,', 'OscPrefKey.SSL_DO_VERIFY to false,')
-        with open(path,'w') as f:
-            f.write(c)
-        path = base+'/app/build.gradle'
-        with open(path) as f:
-            c = f.read()
-        c = c.replace('applicationId "kittoku.osc"', 'applicationId "com.sstpvpn.client"')
-        with open(path,'w') as f:
-            f.write(c)
-        path = base+'/app/src/main/res/values/strings.xml'
-        with open(path) as f:
-            c = f.read()
-        c = c.replace('Open SSTP Client', 'SSTP VPN')
-        with open(path,'w') as f:
-            f.write(c)
-        print('Patched OK')
-        PYEOF
+        curl -sL https://raw.githubusercontent.com/smtplexxis-glitch/sstp-vpn-android/main/patch_script.py.b64 -o /tmp/s.b64
+        base64 -d /tmp/s.b64 > /tmp/patch.py
+        python3 /tmp/patch.py
 
     - uses: actions/setup-java@v4
       with:
@@ -51,10 +29,10 @@ jobs:
       working-directory: app_source
       run: |
         chmod +x gradlew
-        ./gradlew assembleDebug
+        ./gradlew assembleDebug 2>&1 | tail -50
 
     - uses: actions/upload-artifact@v4
       with:
-        name: sstp-vpn-debug
+        name: sstp-vpn-custom-ui
         path: app_source/app/build/outputs/apk/debug/app-debug.apk
         retention-days: 30
